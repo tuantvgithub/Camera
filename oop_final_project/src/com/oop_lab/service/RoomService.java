@@ -76,6 +76,22 @@ public class RoomService {
 
     public boolean doVatNamTrongPhong(Room room, DoVat doVat) {
         // TO DO
+        for (ToaDo toaDo : doVat.getCacDinh().values()) {
+            if ((toaDo.khoangCachDenMatPhang(room.getDanhSachCacMat().get(0)))
+                    + toaDo.khoangCachDenMatPhang(room.getDanhSachCacMat().get(1))
+                    != room.getChieuCao()
+            ) return false;
+            if ((toaDo.khoangCachDenMatPhang(room.getDanhSachCacMat().get(5))
+                    + toaDo.khoangCachDenMatPhang(room.getDanhSachCacMat().get(2)))
+                    != room.getChieuRong()
+            ) return false;
+
+            if(toaDo.khoangCachDenMatPhang(room.getDanhSachCacMat().get(3))
+                    + toaDo.khoangCachDenMatPhang(room.getDanhSachCacMat().get(4)) != room.getChieuDai())
+            {
+                return false;
+            }
+        }
         return true;
     }
 
