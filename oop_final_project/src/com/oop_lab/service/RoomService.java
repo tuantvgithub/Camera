@@ -31,6 +31,32 @@ public class RoomService {
 
     public boolean roomLaHinhHopChuNhat(List<ToaDo> danhSachCacDinh) {
         // TO DO
+        List<ToaDo> matTren = new ArrayList<>();
+        matTren.add(danhSachCacDinh.get(0));
+        matTren.add(danhSachCacDinh.get(1));
+        matTren.add(danhSachCacDinh.get(2));
+        matTren.add(danhSachCacDinh.get(3));
+
+        List<ToaDo> matDuoi = new ArrayList<>();
+        matDuoi.add(danhSachCacDinh.get(4));
+        matDuoi.add(danhSachCacDinh.get(5));
+        matDuoi.add(danhSachCacDinh.get(6));
+        matDuoi.add(danhSachCacDinh.get(7));
+
+        if(!MatPhang.laHCN(matTren) && !MatPhang.laHCN(matDuoi))
+        {
+            return false;
+        }
+        Vector AB = new Vector(danhSachCacDinh.get(0),danhSachCacDinh.get(1));
+        Vector EF = new Vector(danhSachCacDinh.get(4),danhSachCacDinh.get(5));
+        if(AB.doDai() != EF.doDai()) return false;
+
+        Vector AD = new Vector(danhSachCacDinh.get(0),danhSachCacDinh.get(3));
+        Vector EH = new Vector(danhSachCacDinh.get(4),danhSachCacDinh.get(7));
+        if(AD.doDai() != EH.doDai()) return false;
+
+        Vector AE = new Vector(danhSachCacDinh.get(0),danhSachCacDinh.get(4));
+        if(AE.tichVoHuong(EF) != 0) return false;
         return true;
     }
 
@@ -48,23 +74,53 @@ public class RoomService {
         return true;
     }
 
-    public boolean doVatNamTrongPhong(Room roomm, DoVat doVat) {
+    public boolean doVatNamTrongPhong(Room room, DoVat doVat) {
         // TO DO
         return true;
     }
 
     public boolean doVatKhongChamTran(Room room, DoVat doVat) {
         // TO DO
+        if(room.getCacMat().get("EFGH").chuaDiem(doVat.getCacDinh().get("E")))
+        {
+            return false;
+        }
         return true;
     }
 
     public boolean doVatKhongBiVuong(Room room, DoVat doVat) {
         // TO DO
+        for (DoVat dsVat : room.getDanhSachDoVat()) {
+
+            // DoVat them vao` co' dinh nam` trong Vat khac
+            for (ToaDo dsDinh : doVat.getCacDinh().values()) {
+                if (dsVat.chuaDiem(dsDinh))
+                    return false;
+            }
+
+            // ton` tai doVat co' dinh nam` trong doVat them vao`
+            for (ToaDo dsDinh : dsVat.getCacDinh().values()) {
+                if (doVat.chuaDiem(dsDinh))
+                    return false;
+            }
+
+        }
         return true;
     }
 
     public boolean doVatNamTrenSanHoacTrenVatKhac(Room room, DoVat doVat) {
         // TO DO
+        if(!room.getCacMat().get("ABCD").chuaDiem(doVat.getCacDinh().get("A")))
+        {
+            return false;
+        }
+        for(DoVat dsVat : room.getDanhSachDoVat())
+        {
+            if(!dsVat.getDanhSachCacMat().get(1).chuaDiem(doVat.getCacDinh().get("A")))
+            {
+                return false;
+            }
+        }
         return true;
     }
 
