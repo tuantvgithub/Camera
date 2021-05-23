@@ -1,5 +1,7 @@
 package com.oop_lab.model.khong_gian;
 
+import java.util.List;
+
 public class MatPhang {
     private Vector vectorPhapTuyen;
     private ToaDo diemThuoc;
@@ -80,5 +82,30 @@ public class MatPhang {
         // ax + by + cz + d = 0
         return "MatPhang: " + a + "x + " + b + "y + " + c + "z + " +
                 this.giaTriHangSoD() + " = 0";
+    }
+
+    public static boolean laHCN(List<ToaDo> toaDoList)
+    {
+        //ABCD
+        int check = 0;
+        Vector AB = new Vector(toaDoList.get(0),toaDoList.get(1));
+        Vector DC = new Vector(toaDoList.get(3),toaDoList.get(2));
+
+        if(AB.tichCoHuong(DC).equals(new Vector(0,0,0)) && (AB.doDai() == DC.doDai()))
+        {
+            check ++;
+        }
+        Vector AD = new Vector(toaDoList.get(0),toaDoList.get(3));
+        if(AB.tichVoHuong(AD) == 0)
+        {
+            check++;
+        }
+        if(check == 2){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 }
